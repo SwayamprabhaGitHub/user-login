@@ -20,7 +20,37 @@ const AuthForm = () => {
 
     if(isLogin) 
     {
-
+      const loginHandler = async() => {
+        setIsLoading(true);
+        try {
+          const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCL7WxYMeYOz-7uYJ1JxBYF3HlhcAGXzi4', {
+            method: 'POST',
+            body: JSON.stringify({
+              email: enteredEmail,
+            password: enteredPassword,
+            returnSecureToken: true,
+            }),
+            headers: {
+              'Content-type': 'application/json'
+            }
+          })
+          if(!response.ok) {
+            alert('Authentication failed');
+            throw new Error('Authentication failed');
+          }
+          else {
+            const data = await response.json();
+            console.log(data.idToken);
+          }
+        }
+        catch(error) {
+          console.error(error.message);
+        }
+        finally {
+          setIsLoading(false);
+        }
+      }
+      loginHandler();
     }
     else {
       const signUpHandler = async() => {
