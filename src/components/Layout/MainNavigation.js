@@ -8,6 +8,10 @@ const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedin = authCtx.isLoggedin;
 
+  const logoutProfileHandler = () => {
+    authCtx.logout();
+  }
+
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -22,7 +26,7 @@ const MainNavigation = () => {
             <Link to='/profile'>Profile</Link>
           </li>}
           {isLoggedin && <li>
-            <button>Logout</button>
+            <button onClick={logoutProfileHandler}>Logout</button>
           </li>}
         </ul>
       </nav>
